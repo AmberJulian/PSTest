@@ -9,14 +9,15 @@ namespace Test
 
         public EntityBehaviour(Entity centreEntity)
         {
-            m_centreOfGravity = centreEntity;
+            m_centreOfGravity = centreEntity != null ? centreEntity : new Entity();
         }
         
         public void Update(Entity entity, float deltaTime)
         {
-            // Apply gravity towards the cenre           
+            // Apply gravity towards the centre  
             Vector2 diff = m_centreOfGravity.Position - entity.Position;
-            
+
+
             float distanceSquared = diff.sqrMagnitude;
             Vector2 direction = diff.normalized;
 

@@ -6,13 +6,7 @@ public class TestMain : MonoBehaviour
 {
     Test.World m_world = new Test.World();
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
     void Update()
     {
         // Update the world

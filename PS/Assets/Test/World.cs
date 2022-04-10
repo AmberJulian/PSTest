@@ -12,13 +12,8 @@ namespace Test
 
         public World()
         {
-            m_planet = new Entity();
-            m_planet.SetPosition(new Vector2(0, 2));
-            
-            m_entity = new Entity();
-            m_entity.SetBehaviour(new EntityBehaviour(m_planet));
-            m_entity.SetPosition(new Vector2(0, 1));
-            m_entity.SetVelocity(new Vector2(3, 0));
+            m_planet = new Entity(new Vector2(0, 2), 0.1f);
+            m_entity = new Entity(new Vector2(0, 1), 0.2f, new EntityBehaviour(m_planet), new Vector2(3, 0));
         }
         
         public void Update(float deltaTime)
