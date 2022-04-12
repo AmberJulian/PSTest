@@ -27,7 +27,8 @@ namespace Test
         }
 
         public void Update(Entity entity, float deltaTime)
-        {
+        {       
+            //Any physics for the player would go here, but putting in gravity makes the player look too similar to a moon presently so I have purposely left it blank.
         }
     }
 }
