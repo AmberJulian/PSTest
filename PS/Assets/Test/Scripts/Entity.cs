@@ -19,7 +19,7 @@ namespace Test
         private Color m_color;
         public Color Color { get { return m_color; } private set { m_color = value; } }
 
-        private EntityBehaviour m_behaviour;
+        private IEntityBehaviour m_behaviour;
 
         #endregion
 
@@ -33,7 +33,7 @@ namespace Test
             Size = size;
         }
 
-        public Entity(Vector2 position, Color color, float size = 0.1f, EntityBehaviour behaviour = null, Vector2 velocity = new Vector2())
+        public Entity(Vector2 position, Color color, float size = 0.1f, IEntityBehaviour behaviour = null, Vector2 velocity = new Vector2())
         {
             Position = position;
             Velocity = velocity;
@@ -60,7 +60,7 @@ namespace Test
             Size = size;
         }
 
-        public void SetBehaviour(EntityBehaviour behaviour)
+        public void SetBehaviour(IEntityBehaviour behaviour)
         {
             m_behaviour = behaviour;
         }

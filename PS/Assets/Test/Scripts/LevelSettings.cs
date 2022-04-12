@@ -33,7 +33,11 @@ namespace Test
   
         [Header("ENTITY SETTINGS", order = 0)]
 
-        [Header("Planet Settings", order = 1)]
+        [Header("Player Settings", order = 1)]
+        [SerializeField] private EntitySettings m_playerSettings;
+        public EntitySettings PlayerSettings { get { return m_playerSettings; } }
+
+        [Header("Planet Settings")]
 
         [SerializeField] private int m_numberOfRandomPlanets; //Randomly generated planets remain still during play.
         public int NumberOfRandomPlanets { get { return m_numberOfRandomPlanets; } }
@@ -49,6 +53,10 @@ namespace Test
         [SerializeField] private List<EntitySettings> m_handPickedMoons; 
         public List<EntitySettings> HandPickedMoons { get { return m_handPickedMoons; } }
 
+
+
         #endregion
+
+
     }
 }

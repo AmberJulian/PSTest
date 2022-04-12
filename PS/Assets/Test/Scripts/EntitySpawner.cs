@@ -25,15 +25,20 @@ namespace Test
             foreach (var moon in levelSettings.HandPickedMoons)
             {
                 Entity closestPlanet = planets.OrderBy(t => (t.Position - moon.StartingPosition).sqrMagnitude).FirstOrDefault();
-                moons.Add(CreateMoon(moon.StartingPosition, moon.Color, moon.Size, new EntityBehaviour(closestPlanet),  moon.StartingVelocity));
+                moons.Add(CreateMoon(moon.StartingPosition, moon.Color, moon.Size, new MoonBehaviour(closestPlanet),  moon.StartingVelocity));
             }
 
             moons.AddRange(CreateLevelsRandomMoons(levelSettings.NumberOfRandomMoons, planets, spawnRestrictions));
+
+            //Players
+            Entity player = CreatePlayerEntity(levelSettings.PlayerSettings.StartingPosition, levelSettings.PlayerSettings.Color, levelSettings.PlayerSettings.Size);
+
 
             //Add them together
             List<Entity> entities = new List<Entity>();
             entities.AddRange(planets);
             entities.AddRange(moons);
+            entities.Add(player);
 
             return entities;
         }
@@ -70,7 +75,7 @@ namespace Test
 
         #region Moon Creation
 
-        public static Entity CreateMoon(Vector2 position, LevelSettings.EntityColor color, float size = 0.1f, EntityBehaviour behaviour = null, Vector2 velocity = new Vector2())
+        public static Entity CreateMoon(Vector2 position, LevelSettings.EntityColor color, float size = 0.1f, MoonBehaviour behaviour = null, Vector2 velocity = new Vector2())
         {
             return new Entity(position, ConvertEntityColorToColor(color), size, behaviour, velocity);
         }
@@ -99,12 +104,22 @@ namespace Test
 
 
                 //Apply random settings
-                newMoons.Add(CreateMoon(randomPosition, randomColor, randomSize, new EntityBehaviour(closestPlanet), randomVelocity));
+                newMoons.Add(CreateMoon(randomPosition, randomColor, randomSize, new MoonBehaviour(closestPlanet), randomVelocity));
             }
 
             return newMoons;
         }
 
+        #endregion
+
+        #region PlayerCreation
+        public static Entity CreatePlayerEntity(Vector2 position, LevelSettings.EntityColor color, float size = 0.1f, Entity closestPlanet = null)
+        {
+            Entity player = new Entity(position, ConvertEntityColorToColor(color), size);
+            player.SetBehaviour(new PlayerBehaviour(player));
+            return player;
+
+        }
         #endregion
 
         private static Color ConvertEntityColorToColor(LevelSettings.EntityColor entityColor)

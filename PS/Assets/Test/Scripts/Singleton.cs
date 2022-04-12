@@ -4,7 +4,7 @@ using UnityEngine;
 
     public class Singleton<T> : MonoBehaviour where T : Component
     {
-        public static T m_instance;
+        private static T m_instance;
         public static T Instance
         {
             get
