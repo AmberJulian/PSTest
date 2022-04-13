@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 603d32e9dadb4dd459baeed2ac1058cc, type: 3}
   m_Name: Level 1
   m_EditorClassIdentifier: 
+  m_playerSettings:
+    StartingPosition: {x: -4, y: -4}
+    Size: 0.2
+    Color: 0
+    StartingVelocity: {x: 0, y: 0}
   m_numberOfRandomPlanets: 0
   m_handPickedPlanets:
   - StartingPosition: {x: 0, y: 2}

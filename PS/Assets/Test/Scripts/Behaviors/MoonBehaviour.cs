@@ -12,6 +12,15 @@ namespace Test
             m_centreOfGravity = centreEntity != null ? centreEntity : new Entity();
         }
 
+        public MoonBehaviour(Entity centreEntity, Entity thisEntity)
+        {
+            m_centreOfGravity = centreEntity != null ? centreEntity : new Entity();
+
+            SetOrbitVelocity(thisEntity);
+
+
+        }
+
         public void Update(Entity entity, float deltaTime)
         {
             // Apply gravity towards the centre  
@@ -25,6 +34,18 @@ namespace Test
 
             // Apply acceleration toward the centre of mass.
             entity.SetVelocity(entity.Velocity + acc * deltaTime);
+        }
+
+        private void SetOrbitVelocity(Entity entity)
+        {
+            Vector2 planetPosition = m_centreOfGravity.Position;
+            Vector2 diff = planetPosition - entity.Position;
+
+            Vector2 perfectVelocityForDistance = diff.normalized * Mathf.Sqrt(gravityForce * Vector2.Distance(entity.Position, planetPosition));
+
+            Debug.LogError("hm" + planetPosition);
+
+            entity.SetVelocity(new Vector2(-perfectVelocityForDistance.y, perfectVelocityForDistance.x ));
         }
     }
 }

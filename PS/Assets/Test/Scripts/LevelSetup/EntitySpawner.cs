@@ -10,6 +10,9 @@ namespace Test
         public static List<Entity> SpawnLevelEntities(LevelSettings levelSettings, GameSettings.EntityIntializationRestrictions spawnRestrictions)
         {
 
+            //Note to test marker: Definitely need to split this function up
+
+
             //Planets - Handpicked and then randoms
             List<Entity> planets = new List<Entity>();
             foreach (var planet in levelSettings.HandPickedPlanets)
@@ -33,12 +36,21 @@ namespace Test
             //Players
             Entity player = CreatePlayerEntity(levelSettings.PlayerSettings.StartingPosition, levelSettings.PlayerSettings.Color, levelSettings.PlayerSettings.Size);
 
+            //Satellites
+            List<Entity> satellites = new List<Entity>();
+            foreach (var satellite in levelSettings.HandPickedSatellites)
+            {
+                Entity closestPlanet = planets.OrderBy(t => (t.Position - satellite.StartingPosition).sqrMagnitude).FirstOrDefault();
+                satellites.Add(CreateSmartSatellite(satellite.StartingPosition, satellite.Color, satellite.Size, new SmartSateliteBehaviour(closestPlanet), satellite.StartingVelocity));
+            }
+
 
             //Add them together
             List<Entity> entities = new List<Entity>();
             entities.AddRange(planets);
             entities.AddRange(moons);
             entities.Add(player);
+            entities.AddRange(satellites);
 
             return entities;
         }
@@ -112,12 +124,20 @@ namespace Test
 
         #endregion
 
-        #region PlayerCreation
+        #region Player Creation
         public static Entity CreatePlayerEntity(Vector2 position, LevelSettings.EntityColor color, float size = 0.1f, Entity closestPlanet = null)
         {
             Entity player = new Entity(position, ConvertEntityColorToColor(color), size);
             player.SetBehaviour(new PlayerBehaviour(player));
             return player;
+
+        }
+        #endregion
+
+        #region Smart Satellite Creation
+        public static Entity CreateSmartSatellite(Vector2 position, LevelSettings.EntityColor color, float size = 0.1f, SmartSateliteBehaviour satelliteBehaviour = null, Vector2 velocity = new Vector2())
+        {
+            return new Entity(position, ConvertEntityColorToColor(color), size, satelliteBehaviour, velocity);
 
         }
         #endregion

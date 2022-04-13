@@ -53,7 +53,9 @@ namespace Test
         [SerializeField] private List<EntitySettings> m_handPickedMoons; 
         public List<EntitySettings> HandPickedMoons { get { return m_handPickedMoons; } }
 
-
+        [Header("Smart Satellite Settings")]
+        [SerializeField] private List<EntitySettings> m_handPickedSatellites;
+        public List<EntitySettings> HandPickedSatellites { get { return m_handPickedSatellites; } }
 
         #endregion
 
